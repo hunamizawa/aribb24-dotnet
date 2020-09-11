@@ -11,17 +11,19 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        dotnet: [ '2.1.x', '3.1.x' ]
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
     
-    name: .NET Core ${{ matrix.dotnet }}   
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET Core 2.1
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ matrix.dotnet }}
+        dotnet-version: 2.1.x
+    - name: Setup .NET Core 3.1
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
