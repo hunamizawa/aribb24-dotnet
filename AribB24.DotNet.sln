@@ -13,15 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AribB24.DotNet.Tests", "AribB24.DotNet.Tests\AribB24.DotNet.Tests.csproj", "{BEE9E784-6783-4B06-8055-943D2798DBEF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9F4674F8-0B4A-4189-A393-92477FF4D5C3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{674B30B7-E807-455C-9197-4802895BBB68}"
-	ProjectSection(SolutionItems) = preProject
-		dotnet-core.yml = dotnet-core.yml
-		nuget.yml = nuget.yml
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AribB24.DotNet.Tests", "AribB24.DotNet.Tests\AribB24.DotNet.Tests.csproj", "{BEE9E784-6783-4B06-8055-943D2798DBEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +32,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9F4674F8-0B4A-4189-A393-92477FF4D5C3} = {13DC73BF-D3D3-44D7-A83B-E81FE8AAF39A}
-		{674B30B7-E807-455C-9197-4802895BBB68} = {9F4674F8-0B4A-4189-A393-92477FF4D5C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1785DB00-ACE7-4A1B-AE95-FE118F37F8B1}
