@@ -23,10 +23,21 @@ jobs:
     name: .NET Core ${{ matrix.dotnet }}   
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .net core 2.1.810
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ format('{0}.x', matrix.dotnet) }}
+        dotnet-version: 2.1.810
+    - name: Setup .net core 3.1.402
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.402
+    - name: .net SxS
+      run: |
+        rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
+    #- name: Setup .NET Core
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: ${{ format('{0}.x', matrix.dotnet) }}
     - name: Build
       run: dotnet build --configuration Release --framework ${{ env.FRAMEWORK }}
     - name: Test
