@@ -34,6 +34,8 @@ jobs:
     #- name: .net SxS
     #  run: |
     #    rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
+    - name: ls
+      run: ls -l
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
