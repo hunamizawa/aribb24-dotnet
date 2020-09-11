@@ -11,38 +11,36 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        dotnet: [ '2.1', '3.1' ]
+    #strategy:
+    #  matrix:
+    #    dotnet: [ '2.1', '3.1' ]
     
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      FRAMEWORK: ${{ format('netcoreapp{0}', matrix.dotnet) }}
+      #FRAMEWORK: ${{ format('netcoreapp{0}', matrix.dotnet) }}
 
-    name: .NET Core ${{ matrix.dotnet }}   
+    #name: .NET Core ${{ matrix.dotnet }}   
     steps:
-    #- uses: actions/checkout@v2
-    #- name: Setup .net core 2.1.810
-    #  uses: actions/setup-dotnet@v1
-    #  with:
-    #    dotnet-version: 2.1.810
-    #- name: Setup .net core 3.1.402
-    #  uses: actions/setup-dotnet@v1
-    #  with:
-    #    dotnet-version: 3.1.402
-    #- name: .net SxS
-    #  run: |
-    #    rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
-    - name: ls
-      run: ls -l
-    - name: Setup .NET Core
+    - uses: actions/checkout@v2
+    - name: Setup .net core 2.1.810
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ format('{0}.x', matrix.dotnet) }}
+        dotnet-version: 2.1.810
+    - name: Setup .net core 3.1.402
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.402
+    - name: .net SxS
+      run: |
+        rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
+    #- name: Setup .NET Core
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: ${{ format('{0}.x', matrix.dotnet) }}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --framework ${{ env.FRAMEWORK }}
+      run: dotnet test --no-build
