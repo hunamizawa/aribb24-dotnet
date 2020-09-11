@@ -9,23 +9,20 @@
 # Install
 
 ```
-PM> Install-Package System.Text.Encoding.CodePages
 PM> Install-Package AribB24.DotNet
 ```
 
-**`AribB24.DotNet` を利用する側でも `System.Text.Encoding.CodePages` を参照することが必要です。**
+もしくは
 
-`AribB24.DotNet` は内部で CP932 (Shift-JIS) に依存しています。利用する側で CP932 を使用できる状態にしないと `TypeInitializationException` が発生します。
+```
+dotnet add package AribB24.DotNet
+```
 
 # Usage
 
 ```csharp
 using System.Text;
 using AribB24.DotNet;
-
-// 【重要】CP932 を利用できるようにする
-// これを呼ばないと TypeInitializationException が発生する
-Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 B24Decoder encoder = new B24Decoder();
 byte[] bytes = File.ReadAllBytes("input"); // デコードしたいバイト列
@@ -35,6 +32,8 @@ string str = encoder.GetString(bytes);
 Span<byte> span = bytes.AsSpan().Slice(15, 10);
 str = encoder.GetString(span);
 ```
+
+（名前が HogeEncoding でないのは、`System.Text.Encoding` を実装していないためです）
 
 # ARIB STD-B24 8単位符号 について
 

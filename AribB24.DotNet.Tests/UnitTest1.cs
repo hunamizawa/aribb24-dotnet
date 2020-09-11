@@ -13,8 +13,6 @@ namespace AribB24.DotNet.Tests
         [Fact]
         public void SimpleDecodeTest()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             var encoder = new B24Decoder();
 
             // TODO
@@ -41,8 +39,6 @@ namespace AribB24.DotNet.Tests
         [Fact]
         public void Decodes_JIS_X_0213_2004_Collectly()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             var (jisCodes, fullToHalf) = ReadJisX0213File(@"jisx0213-2004-8bit-std.txt");
             ReadZen2HanFile(@"zen2han.txt", fullToHalf);
 
@@ -82,8 +78,6 @@ namespace AribB24.DotNet.Tests
         [Fact]
         public void Decodes_Katakana_Hiragana_Collectly()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             var patterns = new Dictionary<int, (string, string, string)>
             {
                 [0x21] = ("ァ", "ｧ", "ぁ"),

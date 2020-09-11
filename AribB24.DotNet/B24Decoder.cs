@@ -13,8 +13,16 @@ namespace AribB24.DotNet
 #endif
 
         // こいつらは文字符号集合に Windows-31J を使っている
-        private static readonly Encoding sjis = Encoding.GetEncoding(932);
-        private static readonly Encoding eucjp = Encoding.GetEncoding(51932);
+        private static readonly Encoding sjis;
+        private static readonly Encoding eucjp;
+
+        static B24Decoder()
+        {
+            // SJIS, EUC-JP を利用可能にする
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            sjis = Encoding.GetEncoding(932);
+            eucjp = Encoding.GetEncoding(51932);
+    }
 
         private static bool IsCx(byte value) => (value & 0b_0110_0000) == 0;
         private static bool IsCL(byte value) => (value & 0b_1110_0000) == 0;
@@ -583,18 +591,21 @@ namespace AribB24.DotNet
         /// <returns></returns>
         private static string LookupChar(GraphicSet set, int code, bool halfwidthFlag)
         {
+            static string convToHalfIf(bool halfwidthFlag, string full)
+            {
+                if (halfwidthFlag && fullToHalfTable.TryGetValue(full, out var half))
+                    return half;
+                return full;
+            }
+
             switch (set)
             {
                 case GraphicSet.Kanji:
-                    throw new NotImplementedException("漢字系集合の振り分けに失敗");
+                    throw new InvalidOperationException("漢字系集合の振り分けに失敗している");
 
                 case GraphicSet.JISCompatibleKanji_Plane1:
-                {
-                    var full = jisx0213Plane1Table[code];
-                    if (halfwidthFlag && fullToHalfTable.TryGetValue(full, out var half))
-                        return half;
-                    return full;
-                }
+                    return convToHalfIf(halfwidthFlag, jisx0213Plane1Table[code]);
+
                 case GraphicSet.JISCompatibleKanji_Plane2:
                     return jisx0213Plane2Table[code];
 
@@ -603,9 +614,7 @@ namespace AribB24.DotNet
 
                 case GraphicSet.Alphanumeric:
                 case GraphicSet.ProportionalAlphanumeric:
-                    if (halfwidthFlag)
-                        throw new InvalidOperationException("Alphanumeric は EUC-JP; CP932 で解釈できるはずなのに");
-                    return jisx0201FullwidthTable[code];
+                    return convToHalfIf(halfwidthFlag, jisx0201FullwidthTable[code]);
 
                 case GraphicSet.Hiragana:
                 case GraphicSet.ProportionalHiragana:
@@ -613,16 +622,10 @@ namespace AribB24.DotNet
 
                 case GraphicSet.Katakana:
                 case GraphicSet.ProportionalKatakana:
-                {
-                    var full = katakanaTable[code];
-                    if (halfwidthFlag && fullToHalfTable.TryGetValue(full, out var half))
-                        return half;
-                    return full;
-                }
+                    return convToHalfIf(halfwidthFlag, katakanaTable[code]);
+
                 case GraphicSet.JISX0201Katakana:
-                    if (halfwidthFlag)
-                        throw new InvalidOperationException("JISX0201Katakana は CP932 で解釈できるはずなのに");
-                        return jisx0201FullwidthTable[code];
+                    return convToHalfIf(halfwidthFlag, jisx0201FullwidthTable[code]);
 
                 default:
                     return null;
