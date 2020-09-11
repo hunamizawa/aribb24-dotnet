@@ -19,23 +19,23 @@ jobs:
     steps:
       
     - uses: actions/checkout@v2
-      
-    - name: Setup .net core 2.1.202 (2.0)
+
+    - name: Setup .net core 2.0.3
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.1.202
+        dotnet-version: 2.0.3
     - name: Setup .net core 2.1.810
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.1.810
-    - name: .net SxS #1
+    - name: .net SxS
       run: |
-        rsync -a ${DOTNET_ROOT/2.1.810/2.1.202}/* $DOTNET_ROOT/
+        rsync -a ${DOTNET_ROOT/2.1.810/2.0.3}/* $DOTNET_ROOT/
     - name: Setup .net core 3.1.402
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.402
-    - name: .net SxS #2
+    - name: .net SxS
       run: |
         rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
 
