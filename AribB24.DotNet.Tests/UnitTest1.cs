@@ -220,7 +220,7 @@ namespace AribB24.DotNet.Tests
 
                 var cols = line.Split('\t');
 
-                if (cols[1].Length == 0)
+                if (cols.Length < 2 || cols[1].Length == 0)
                     continue;
 
                 var kuTen = int.Parse(cols[0].Substring(2), NumberStyles.HexNumber);
