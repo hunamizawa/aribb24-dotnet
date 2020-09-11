@@ -43,6 +43,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build AribB24.DotNet.Tests/AribB24.DotNet.Tests.csproj --no-restore --configuration Release --framework ${{ env.FRAMEWORK }}
+      run: dotnet build --no-restore --configuration Release
     - name: Test
       run: dotnet test --no-build --framework ${{ env.FRAMEWORK }}
