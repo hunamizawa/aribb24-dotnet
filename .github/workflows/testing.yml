@@ -38,7 +38,9 @@ jobs:
     #  uses: actions/setup-dotnet@v1
     #  with:
     #    dotnet-version: ${{ format('{0}.x', matrix.dotnet) }}
+    - name: Install dependencies
+      run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --framework ${{ env.FRAMEWORK }}
+      run: dotnet build --no-restore --configuration Release --framework ${{ env.FRAMEWORK }}
     - name: Test
       run: dotnet test --no-build --framework ${{ env.FRAMEWORK }}
