@@ -23,26 +23,26 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Setup .NET Core 2.0
-      if: matrix.dotnet_core == '2.0'
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.1.202
+    #- name: Setup .NET Core 2.0
+    #  if: matrix.dotnet_core == '2.0'
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: 2.1.202
 
     - name: Setup .NET Core 2.1
-      if: matrix.dotnet_core != '2.0'
+      #if: matrix.dotnet_core != '2.0'
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.1.810
 
     - name: Setup .NET Core 3.1
-      if: matrix.dotnet_core != '2.0'
+      #if: matrix.dotnet_core != '2.0'
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.402
 
     - name: .net SxS
-      if: matrix.dotnet_core != '2.0'
+      #if: matrix.dotnet_core != '2.0'
       run: |
         rsync -a ${DOTNET_ROOT/$CORESDK_31/$CORESDK_21}/* $DOTNET_ROOT/
         
