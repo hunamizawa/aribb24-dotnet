@@ -44,19 +44,17 @@ jobs:
     - name: .net SxS
       #if: matrix.dotnet_core != '2.0'
       run: |
-        rsync -a ${DOTNET_ROOT/$CORESDK_31/$CORESDK_21}/* $DOTNET_ROOT/
+        rsync -a ${DOTNET_ROOT/3.1.402/2.1.810}/* $DOTNET_ROOT/
         
     - name: Install dependencies
       run: dotnet restore
 
+    - name: Clean
+      run: dotnet clean
+      
     - name: Build
-      if: matrix.dotnet_core == '2.0'
       run: |
-        dotnet build AribB24.DotNet/AribB24.DotNet.csproj --no-restore --configuration Release --framework netstandard2.0
-    - name: Build
-      if: matrix.dotnet_core != '2.0'
-      run: |
-        dotnet build AribB24.DotNet/AribB24.DotNet.csproj --no-restore --configuration Release --framework netcoreapp2.1
+        dotnet build AribB24.DotNet/AribB24.DotNet.csproj --no-restore --configuration Release
 
     - name: Test
       run: dotnet test AribB24.DotNet.Tests/AribB24.DotNet.Tests.csproj --configuration Release --framework ${{ format('netcoreapp{0}', matrix.dotnet_core) }}
